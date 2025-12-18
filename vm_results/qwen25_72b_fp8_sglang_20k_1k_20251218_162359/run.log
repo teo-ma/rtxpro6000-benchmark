@@ -1,0 +1,232 @@
+START: Thu Dec 18 16:23:59 CST 2025
+MODEL_REF: genovalabs/Qwen2.5-72B-Instruct-fp8-dynamic
+IN_TOKENS: 20000 OUT_TOKENS: 1000
+CONCURRENCIES: 10,40,200
+CONTEXT_LENGTH: 24576 MEM_FRACTION_STATIC: 0.90
+KV_CACHE_DTYPE: fp8_e5m2 QUANT_PARAM_PATH: 
+Thu Dec 18 16:23:59 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.105.08             Driver Version: 580.105.08     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA RTX Pro 6000 Blac...    On  |   00000002:00:00.0 Off |                   On |
+| N/A   N/A    P0            N/A  /  N/A  |       1MiB /  98304MiB |     N/A      Default |
+|                                         |                        |              Enabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| MIG devices:                                                                            |
++------------------+----------------------------------+-----------+-----------------------+
+| GPU  GI  CI  MIG |              Shared Memory-Usage |        Vol|        Shared         |
+|      ID  ID  Dev |                Shared BAR1-Usage | SM     Unc| CE ENC  DEC  OFA  JPG |
+|                  |                                  |        ECC|                       |
+|==================+==================================+===========+=======================|
+|  0    0   0   0  |               1MiB / 94895MiB    |188      0 |  4   4    4    1    4 |
+|                  |               0MiB /   256MiB    |           |                       |
++------------------+----------------------------------+-----------+-----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+DOWNLOADING: genovalabs/Qwen2.5-72B-Instruct-fp8-dynamic -> /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic
+Downloading '.gitattributes' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/wPaCkH-WbT7GsmxMKKrNZTV4nSM=.a6344aac8c09253b3b630fb776ae94478aa0275b.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.gitattributes
+Downloading 'README.md' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/Xn7B-BWUGOee2Y6hCZtEhtFu4BE=.b2d4d8e29c532c3eb1f4d924d7959f6922db1bc5.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/README.md
+Downloading 'added_tokens.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/SeqzFlf9ZNZ3or_wZAOIdsM3Yxw=.482ced4679301bf287ebb310bdd1790eb4514232.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/added_tokens.json
+Downloading 'config.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/8_PA_wEVGiVa2goH2H4KQOQpvVY=.c30ff121ebd07184bb52dd1dff0f0fbdeed8638f.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/config.json
+Downloading 'generation_config.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/3EVKVggOldJcKSsGjSdoUCN1AyQ=.64d276026250ecfcbc0ad9596b28a8da9b37d562.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/generation_config.json
+Downloading 'merges.txt' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/PtHk0z_I45atnj23IIRhTExwT3w=.31349551d90c7606f325fe0f11bbb8bd5fa0d7c7.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/merges.txt
+Downloading 'model-00001-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/20LmoGKCo4MvemCpKnOtDmJJMFw=.a30a60a5c1fc1b1960d89ff48c4f7d593122ff5ed978485dca3b0a3dc90709a1.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00001-of-00016.safetensors
+Downloading 'model-00002-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/IBTSJQViHKW_AWzvBd_SHkjc0PA=.0f75ce0d2e6b9079e80816501c7dd15aef8a35d480cb2ce3c11a5a1f0f684ae4.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00002-of-00016.safetensors
+Downloading 'model-00003-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/AwWjF2rd2yAAZyUoib4H0503mKU=.1f276541459f13f3296353636c7732f24403152a47e151ddc5004ba0b8520c3f.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00003-of-00016.safetensors
+Downloading 'model-00004-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/prewcrScFqS548bxOU4ZpduDP9Y=.a7ae55616b2112a6d2627f440d69d76d56708bba6e34b25f2898aa56a5588b0e.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00004-of-00016.safetensors
+Downloading 'model-00005-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/TAftr-n1Mc5p-VZuOS6Ah9irOI8=.3cf366b000d0d1f2f004755ed8c75d6e3be55daba681925ea8d11fe71645cb9f.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00005-of-00016.safetensors
+Downloading 'model-00006-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/WL524bGfkoVTBfbEo9S8ur2CAgU=.c1a3d8f7f11bdaa5dc30d02d4496105a9bab5f0c19f495085162d42cc98871ad.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00006-of-00016.safetensors
+Downloading 'model-00007-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/kYoMlOTp6ig_atJS4oV8OifWoCc=.804346495ffa3fdfcf34a4bb7f7cd88f897faa51d9d9619a643cdc7ebb6f4dc1.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00007-of-00016.safetensors
+Downloading 'model-00008-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/_39jKKZ8Tp-JolAfvyocLZV0NDs=.4cfe9b7af90d573aca459f9f1e91bc704ffa29de0835161af7bd4ad1b18dce0f.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00008-of-00016.safetensors
+Downloading 'model-00009-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/cFQzOP_2y8cvSiOF6prCO9d48eQ=.1f33fbe01d7ec6186d219c09cd7690690e2952a06bd8fd4d1f7858124a1cc2c0.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00009-of-00016.safetensors
+Downloading 'model-00010-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/UcCVl-spvKjqL7TZGaI1I7TJNQQ=.99c3b530f315264d47097cfc8a73c2719404360c9631a65bb9857ff39ed1bf0b.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00010-of-00016.safetensors
+Downloading 'model-00011-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/pAew9bP9ZJZkVOCzSQ53cL2ddh4=.86ed59c20c0d5c149357aa3d5967dc7e76de5a6ba6cd19af069548adb3f8c69e.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00011-of-00016.safetensors
+Downloading 'model-00012-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/FVA-VRytWi4nXI9mm6kmmzZ4Ekk=.3975a30cb5b53d875de86ed408c69e34c47c6fcbc0c871f35c3b24cdb5824a74.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00012-of-00016.safetensors
+Downloading 'model-00013-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/SHyPR_AoAs2lMaPH_LAG0I76t1c=.5b347de6e808247c90426b2b69e660e5516cf483d0250c2dd33b6e7d08b86089.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00013-of-00016.safetensors
+Downloading 'model-00014-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/CLmU20ClBXEnTjEeiO8UrvHDviw=.374b03f3e162a9d94bb5367949abdf124ee9fa05423f6c0c09e5b7a6991cdd43.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00014-of-00016.safetensors
+Downloading 'model-00015-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/QN_YVueaZE-eSwGe5vRV9oum3MA=.a027984ed1d7f23d7e37ffa2d7539194b66760e9bb337de1eadd3d0f7b5316ce.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00015-of-00016.safetensors
+Downloading 'model-00016-of-00016.safetensors' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/hjpdlaIvQm-1OBKJLRcjrD2jjuE=.f2c71781cbbf22424db4270ccbdb01fff390e99243f9b929ff68e6e3683525cc.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model-00016-of-00016.safetensors
+Downloading 'model.safetensors.index.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/yVzAsSxRSINSz-tQbpx-TLpfkLU=.fe14b486ef453467cc63e740557e3a2dc6d52f23.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/model.safetensors.index.json
+Downloading 'special_tokens_map.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/ahkChHUJFxEmOdq5GDFEmerRzCY=.ac23c0aaa2434523c494330aeb79c58395378103.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/special_tokens_map.json
+Downloading 'tokenizer.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/HgM_lKo9sdSCfRtVg7MMFS7EKqo=.d24314ef7f0afd1b678c2e24c767e19f24f86b0e.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/tokenizer.json
+Downloading 'tokenizer_config.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/vzaExXFZNBay89bvlQv-ZcI6BTg=.482ccbc1096b0e9400e86e33f189681c2aebdab9.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/tokenizer_config.json
+Downloading 'vocab.json' to '/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/.cache/huggingface/download/j3m-Hy6QvBddw8RXA1uSWl1AJ0c=.4783fe10ac3adce15ac8f358ef5462739852c569.incomplete'
+Download complete. Moving file to /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic/vocab.json
+/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic
+MODEL_PATH: /mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic
+SERVER_PID: 128994
+SERVER_READY: Thu Dec 18 16:27:41 CST 2025
+BENCH_CONCURRENCY: 10
+benchmark_args=Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model=None, served_model_name=None, tokenizer=None, num_prompts=10, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=10, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model='/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic', served_model_name=None, tokenizer=None, num_prompts=10, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=10, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+
+#Input tokens: 97172
+#Output tokens: 4385
+Starting warmup with 0 sequences...
+Warmup completed with 0 sequences. Starting main benchmark run...
+
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 10        
+Successful requests:                     10        
+Benchmark duration (s):                  123.11    
+Total input tokens:                      97172     
+Total input text tokens:                 97172     
+Total input vision tokens:               0         
+Total generated tokens:                  4385      
+Total generated tokens (retokenized):    4385      
+Request throughput (req/s):              0.08      
+Input token throughput (tok/s):          789.30    
+Output token throughput (tok/s):         35.62     
+Peak output token throughput (tok/s):    104.00    
+Peak concurrent requests:                10        
+Total token throughput (tok/s):          824.91    
+Concurrency:                             5.69      
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   70064.53  
+Median E2E Latency (ms):                 61773.01  
+---------------Time to First Token----------------
+Mean TTFT (ms):                          20492.25  
+Median TTFT (ms):                        17083.30  
+P99 TTFT (ms):                           51772.97  
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          117.56    
+Median TPOT (ms):                        123.70    
+P99 TPOT (ms):                           146.61    
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           113.31    
+Median ITL (ms):                         81.29     
+P95 ITL (ms):                            87.19     
+P99 ITL (ms):                            87.85     
+Max ITL (ms):                            23332.64  
+==================================================
+BENCH_CONCURRENCY: 40
+benchmark_args=Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model=None, served_model_name=None, tokenizer=None, num_prompts=40, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=40, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model='/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic', served_model_name=None, tokenizer=None, num_prompts=40, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=40, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+
+#Input tokens: 394377
+#Output tokens: 18561
+Starting warmup with 0 sequences...
+Warmup completed with 0 sequences. Starting main benchmark run...
+
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 40        
+Successful requests:                     40        
+Benchmark duration (s):                  347.58    
+Total input tokens:                      394377    
+Total input text tokens:                 394377    
+Total input vision tokens:               0         
+Total generated tokens:                  18561     
+Total generated tokens (retokenized):    18559     
+Request throughput (req/s):              0.12      
+Input token throughput (tok/s):          1134.65   
+Output token throughput (tok/s):         53.40     
+Peak output token throughput (tok/s):    130.00    
+Peak concurrent requests:                40        
+Total token throughput (tok/s):          1188.05   
+Concurrency:                             20.53     
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   178432.42 
+Median E2E Latency (ms):                 173455.03 
+---------------Time to First Token----------------
+Mean TTFT (ms):                          125127.13 
+Median TTFT (ms):                        132409.71 
+P99 TTFT (ms):                           273507.81 
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          113.83    
+Median TPOT (ms):                        113.93    
+P99 TPOT (ms):                           172.36    
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           115.12    
+Median ITL (ms):                         81.20     
+P95 ITL (ms):                            83.82     
+P99 ITL (ms):                            813.47    
+Max ITL (ms):                            11174.62  
+==================================================
+BENCH_CONCURRENCY: 200
+benchmark_args=Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model=None, served_model_name=None, tokenizer=None, num_prompts=200, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=200, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+Namespace(backend='sglang', base_url=None, host='127.0.0.1', port=30000, dataset_name='random', dataset_path='', model='/mnt/data/models/genovalabs_Qwen2.5-72B-Instruct-fp8-dynamic', served_model_name=None, tokenizer=None, num_prompts=200, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=20000, random_output_len=1000, random_range_ratio=0.0, image_count=1, image_resolution='1080p', image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=200, output_file='/mnt/data/work/bench_suite_results/20251218_162359_qwen25_72b_fp8_sglang_20k_1k/bench_sglang.jsonl', output_details=False, print_requests=False, disable_tqdm=True, disable_stream=False, return_logprob=False, seed=1, disable_ignore_eos=False, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_num_steps=None, profile_by_stage=False, profile_stages=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, warmup_requests=0, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', tag='qwen25_72b_fp8_sglang_20k_1k_c')
+
+#Input tokens: 2062211
+#Output tokens: 99766
+Starting warmup with 0 sequences...
+Warmup completed with 0 sequences. Starting main benchmark run...
+
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 200       
+Successful requests:                     200       
+Benchmark duration (s):                  1794.96   
+Total input tokens:                      2062211   
+Total input text tokens:                 2062211   
+Total input vision tokens:               0         
+Total generated tokens:                  99766     
+Total generated tokens (retokenized):    99747     
+Request throughput (req/s):              0.11      
+Input token throughput (tok/s):          1148.89   
+Output token throughput (tok/s):         55.58     
+Peak output token throughput (tok/s):    196.00    
+Peak concurrent requests:                200       
+Total token throughput (tok/s):          1204.47   
+Concurrency:                             98.11     
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   880512.76 
+Median E2E Latency (ms):                 822698.62 
+---------------Time to First Token----------------
+Mean TTFT (ms):                          818502.31 
+Median TTFT (ms):                        760554.68 
+P99 TTFT (ms):                           1710031.45
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          138.88    
+Median TPOT (ms):                        117.55    
+P99 TPOT (ms):                           925.75    
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           124.56    
+Median ITL (ms):                         81.22     
+P95 ITL (ms):                            82.33     
+P99 ITL (ms):                            814.82    
+Max ITL (ms):                            489131.25 
+==================================================
+STOPPING_SERVER: Thu Dec 18 17:06:00 CST 2025
