@@ -54,6 +54,8 @@ ADMIN="<admin-username>"
 
 文档示例使用 Ubuntu 24.04（`Ubuntu2404`）与用户名/密码参数：
 
+建议在创建 VM 时**显式关闭 Secure Boot**（在 `TrustedLaunch` 安全类型下）。原因是：Secure Boot 默认开启时，可能会拦截/拒绝加载 NVIDIA GPU 驱动相关的内核模块，从而导致 **GPU driver 安装失败**。
+
 ```bash
 az vm create \
   --resource-group "$RG" \
@@ -62,7 +64,10 @@ az vm create \
   --image "$IMAGE" \
   --admin-username "$ADMIN" \
   --admin-password "<admin-password>" \
+  --security-type TrustedLaunch \
+  --enable-secure-boot false \
   --location "$LOC"
+  
 ```
 
 建议（可选）：生产环境更推荐使用 SSH key（避免明文密码），例如：
@@ -76,6 +81,8 @@ az vm create \
   --admin-username "$ADMIN" \
   --authentication-type ssh \
   --generate-ssh-keys \
+  --security-type TrustedLaunch \
+  --enable-secure-boot false \
   --location "$LOC"
 ```
 
