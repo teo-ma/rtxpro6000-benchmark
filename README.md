@@ -1,4 +1,4 @@
-# FP8 / FP4（NVFP4）推理测试汇总（用于客户分享）
+# Azure NC RTX Pro 6000 FP8 / NVFP4推理测试汇总
 
 本文汇总了 **FP8** 以及 **FP4（NVFP4）** 推理测试结果，并给出测试方法、指标含义、以及在 Azure 上使用 RTX Pro 6000 GPU VM 的简要说明。
 
@@ -27,24 +27,24 @@
 ### 3.1 Qwen 3 14B（10K → 0.8K，FP8）
 
 - 模型：Qwen/Qwen3-14B-FP8
-- 引擎：sglang 0.5.6.post2
+- 引擎：vLLM 0.12.0
 
-| 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 备注 |
-|---:|---:|---:|---:|---:|---:|---:|---|
-| 10 | 0.532 | 2005.716 | 193.291 | 1624.730 | 11627.491 | 29.143 | sglang 0.5.6.post2; attention_backend=triton; sampling_backend=pytorch; fp8_gemm_backend=cutlass; SGLANG_ENABLE_JIT_DEEPGEMM=0 |
-| 40 | 1.201 | 5321.382 | 464.224 | 5709.358 | 23091.384 | 85.780 | sglang 0.5.6.post2; attention_backend=triton; sampling_backend=pytorch; fp8_gemm_backend=cutlass; SGLANG_ENABLE_JIT_DEEPGEMM=0 |
-| 200 | 1.634 | 7486.921 | 700.456 | 34816.736 | 81231.592 | 118.182 | sglang 0.5.6.post2; attention_backend=triton; sampling_backend=pytorch; fp8_gemm_backend=cutlass; SGLANG_ENABLE_JIT_DEEPGEMM=0 |
+| 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 实际 Input tokens | 实际 Output tokens | 备注 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 0.054 | 197352.079 | 43.501 | 50.671 | 18417.992 | 22.988 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时，严格输出=800）；Prefix cache hit rate：GPU=49.92%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-14B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8005`；strict：`python3 /mnt/data/work/tools/vllm_strict_c1_check.py --model /mnt/data/models/Qwen_Qwen3-14B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-14B-FP8 --api-base http://127.0.0.1:8005 --metrics-url http://127.0.0.1:8005/metrics --server-log <outdir>/vllm_server.log --in-tokens 10000 --out-tokens 800 --requests 2 --stream-metrics --out-json <outdir>/strict_result.json` |
+| 10 | 0.486 | 194913.743 | 38.979 | 51.305 | 20549.589 | 25.655 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时 + ThreadPoolExecutor 真并发；30 req / c=10；严格输出=800）；Prefix cache hit rate：GPU=96.62%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-14B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8006`；bench：`python3 /mnt/data/work/tools/vllm_strict_concurrency_bench.py --model /mnt/data/models/Qwen_Qwen3-14B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-14B-FP8 --api-base http://127.0.0.1:8006 --metrics-url http://127.0.0.1:8006/metrics --in-tokens 10000 --out-tokens 800 --concurrency 10 --warmup 1 --total-requests 30 --out-json <outdir>/result_strict_c10.json` |
+| 40 | 1.625 | 107634.070 | 32.602 | 92.907 | 24600.357 | 30.673 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时 + ThreadPoolExecutor 真并发；120 req / c=40；严格输出=800；未做外部 request-rate 限流）；Prefix cache hit rate：GPU=99.01%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-14B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8007`；bench：`python3 /mnt/data/work/tools/vllm_strict_concurrency_bench.py --model /mnt/data/models/Qwen_Qwen3-14B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-14B-FP8 --api-base http://127.0.0.1:8007 --metrics-url http://127.0.0.1:8007/metrics --in-tokens 10000 --out-tokens 800 --concurrency 40 --warmup 1 --total-requests 120 --out-json <outdir>/result_strict_c40.json` |
 
 ### 3.2 Qwen 3 32B（10K → 0.8K，FP8）
 
 - 模型：Qwen/Qwen3-32B-FP8（FP8 checkpoint）
 - 引擎：vLLM 0.12.0
 
-| 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 备注 |
-|---:|---:|---:|---:|---:|---:|---:|---|
-| 10 | 0.242 | 80347.309 | 19.444 | 133.260 | 41277.883 | 51.431 | HF: Qwen/Qwen3-32B-FP8；checkpoint含float8；enforce_eager=1(禁用torch.compile/cudagraph) |
-| 40 | 0.859 | 45856.968 | 17.275 | 241.641 | 46550.419 | 57.886 | HF: Qwen/Qwen3-32B-FP8；checkpoint含float8；enforce_eager=1(禁用torch.compile/cudagraph) |
-| 200 | 1.927 | 8522.003 | 15.415 | 20130.718 | 72115.927 | 64.982 | HF: Qwen/Qwen3-32B-FP8；checkpoint含float8；enforce_eager=1(禁用torch.compile/cudagraph) |
+| 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 实际 Input tokens | 实际 Output tokens | 备注 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | 0.026 | 123192.312 | 21.213 | 81.174 | 37747.629 | 47.142 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时，严格输出=800）；Prefix cache hit rate：GPU=49.92%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-32B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8003`；strict：`python3 /mnt/data/work/tools/vllm_strict_c1_check.py --model /mnt/data/models/Qwen_Qwen3-32B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-32B-FP8 --api-base http://127.0.0.1:8003 --metrics-url http://127.0.0.1:8003/metrics --server-log <outdir>/vllm_server.log --in-tokens 10000 --out-tokens 800 --requests 2 --stream-metrics --out-json <outdir>/strict_result.json` |
+| 10 | 0.246 | 97879.829 | 19.686 | 102.166 | 40690.183 | 50.799 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时 + ThreadPoolExecutor 真并发；30 req / c=10；严格输出=800）；Prefix cache hit rate：GPU=96.62%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-32B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8003`；bench：`python3 /mnt/data/work/tools/vllm_strict_concurrency_bench.py --model /mnt/data/models/Qwen_Qwen3-32B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-32B-FP8 --api-base http://127.0.0.1:8003 --metrics-url http://127.0.0.1:8003/metrics --in-tokens 10000 --out-tokens 800 --concurrency 10 --warmup 1 --total-requests 30 --out-json <outdir>/result_strict_c10.json` |
+| 40 | 0.861 | 60793.479 | 17.263 | 164.491 | 46449.495 | 57.929 | 10000 | 800 | vLLM 0.12.0（OpenAI `/v1/completions`，streaming 计时 + ThreadPoolExecutor 真并发；120 req / c=40；严格输出=800；未做外部 request-rate 限流）；Prefix cache hit rate：GPU=99.01%；server：`vllm serve /mnt/data/models/Qwen_Qwen3-32B-FP8 --enforce-eager --enable-prefix-caching --max-model-len 10928 --gpu-memory-utilization 0.90 --port 8003`；bench：`python3 /mnt/data/work/tools/vllm_strict_concurrency_bench.py --model /mnt/data/models/Qwen_Qwen3-32B-FP8 --tokenizer /mnt/data/models/Qwen_Qwen3-32B-FP8 --api-base http://127.0.0.1:8003 --metrics-url http://127.0.0.1:8003/metrics --in-tokens 10000 --out-tokens 800 --concurrency 40 --warmup 1 --total-requests 120 --out-json <outdir>/result_strict_c40.json` |
 
 ### 3.3 Qwen 2.5 72B（20K → 1K，FP8）
 
@@ -53,9 +53,7 @@
 
 | 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 备注 |
 |---:|---:|---:|---:|---:|---:|---:|---|
-| 10 | 0.081 | 789.296 | 35.618 | 20492.255 | 70064.527 | 117.561 | sglang fp8; kv-cache-dtype=fp8_e5m2 |
-| 40 | 0.115 | 1134.648 | 53.401 | 125127.131 | 178432.416 | 113.830 | sglang fp8; kv-cache-dtype=fp8_e5m2 |
-| 200 | 0.111 | 1148.888 | 55.581 | 818502.312 | 880512.759 | 138.884 | sglang fp8; kv-cache-dtype=fp8_e5m2 |
+| 1 | 0.014 | 3.281 | 12.638 | 83.362 | 71850.196 | 79.038 | sglang fp8; kv-cache-dtype=fp8_e5m2 |
 
 ## 3B) FP4（NVFP4）结果补充
 
@@ -75,11 +73,12 @@
 - 模型：Qwen3-32B-NVFP4
 - 引擎：vLLM 0.12.0
 
+> 说明：下表当前数据来自 vLLM bench 的 `result.json`，当时设置了 `max_inflight=24`（压测侧外部“在途请求数”限流）。按需求要获得“并发=40 且不做外部限流”的结果，请在 VM 上运行 `tools/vm_run_qwen3_32b_nvfp4_vllm_c40_no_throttle.sh`（强制 `BENCH_MAX_INFLIGHT=0`），并用新 `result.json` 回填后再同步更新本表。
+
 | 并发 | QPS | Prompt TPS (token/s) | Decode TPS (token/s) | TTFT (ms) | E2E (ms) | TPOT (ms) | 备注 |
 |---:|---:|---:|---:|---:|---:|---:|---|
-| 10 | 0.336 | 103552.020 | 26.987 | 101.209 | 29745.514 | 37.055 | HF: RedHatAI/Qwen3-32B-NVFP4；vLLM compressed-tensors (NVFP4)；gpu_mem_util=0.90；max_model_len=10928；max_inflight=24 |
+| 10 | 0.336 | 103552.020 | 26.987 | 101.209 | 29745.514 | 37.055 | HF: RedHatAI/Qwen3-32B-NVFP4；vLLM compressed-tensors (NVFP4)；gpu_mem_util=0.90；max_model_len=10928；|
 | 40 | 0.587 | 74638.102 | 23.362 | 141.805 | 34566.358 | 43.031 | HF: RedHatAI/Qwen3-32B-NVFP4；vLLM compressed-tensors (NVFP4)；gpu_mem_util=0.90；max_model_len=10928；max_inflight=24 |
-| 200 | 0.624 | 73498.586 | 22.233 | 138.771 | 36217.538 | 45.098 | HF: RedHatAI/Qwen3-32B-NVFP4；vLLM compressed-tensors (NVFP4)；gpu_mem_util=0.90；max_model_len=10928；max_inflight=24 |
 
 ## 3C) NVFP（NVFP4）特性简介
 
